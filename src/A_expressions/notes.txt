@@ -1,0 +1,17 @@
+- We start with source code (a String):
+    "10*(3+5) <= 15"
+- We pass it to the Lexer, which produces a list of tokens:
+    [10, *, (, 3, +, 5, ), <=, 15]
+    - roughly speaking, a token is the smallest meaningful unit in the source code
+- We then pass the list of tokens to the Parser, which produces an abstract syntax tree (AST):
+                    Logical
+                   /    |   \
+              Binary   <=   Literal:15
+             /  |  \
+   Literal:10   *  Grouping
+                      |
+                    Binary
+                   /  |  \
+           Literal:3  +  Literal:5
+    - We have sealed interface Expr permits Logical, Binary, Unary, Literal, Grouping
+- We take the AST and pass it to the Interpreter, which evaluates the expression and prints the result: false
