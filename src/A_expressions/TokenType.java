@@ -8,10 +8,10 @@ enum TokenType {
     LEFT_PAREN, RIGHT_PAREN, MINUS, PLUS, SLASH, STAR,
 
     // Two-character tokens
-    BANG_EQUAL, // !=
     EQUAL_EQUAL,
 
     // One or two character tokens.
+    BANG, BANG_EQUAL, // !, !=
     GREATER, GREATER_EQUAL,
     LESS, LESS_EQUAL,
 
