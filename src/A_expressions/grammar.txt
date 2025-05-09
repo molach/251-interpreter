@@ -1,0 +1,59 @@
+breakfast -> bread+ egg? coffee*
+bread     -> white | whole-wheat
+egg      -> scrambled | soft-boiled
+coffee   -> black | sweetened
+sweetened -> latte | cappuccino
+
+Explanation of symbols:
+    |   or
+    +   one or more
+    *   zero or more
+    ?   zero or one
+
+Lox precedence (from lowest to highest) and associativity:
+Name	        Operators	    Associativity
+Logical or      or              Left-to-right
+Logical and     and             Left-to-right
+Equality	    == !=	        Left-to-right
+Comparison	    > >= < <=	    Left-to-right
+Term	        - +	            Left-to-right
+Factor	        / *	            Left-to-right
+Unary	        ! -	            Right-to-left
+
+10 - 4 - 2 = (10 - 4) - 2
+---3       = -(-(-3))
+
+expression  →  logic_or
+logic_or    →  logic_and ( "or" logic_and )*
+logic_and   →  equality ( "and" equality )*
+equality    →  comparison ( ( "!=" | "==" ) comparison )*
+comparison  →  term ( ( ">" | ">=" | "<" | "<=" ) term )*
+term        →  factor ( ( "-" | "+" ) factor )*
+factor      →  unary ( ( "/" | "*" ) unary )*
+unary       →  ( "!" | "-" ) unary
+               | primary
+primary     →  "true" | "false" | "nil"
+               | NUMBER | STRING
+               | "(" expression ")"
+
+Each rule here only matches expressions at its
+precedence level or higher.
+For example, unary matches a unary expression like !x
+or a primary expression like 1234.
+And term can match 1 + 2 but also 3 * 4 / 5.
+
+67 + 4 <= 3 + 4 * 2 + 6
+expression -> logic_or
+           -> logic_and
+           -> equality
+           -> comparison
+           -> term "<=" term
+           -> (factor "+" factor) "<=" (factor "+" factor "+" factor)
+           -> (unary "+" unary) "<=" (unary "+" (unary "*" unary) "+" unary )
+           -> (primary "+" primary) "<=" (primary "+" (primary "*" primary) "+" primary)
+           -> (NUMBER "+" NUMBER) "<=" (NUMBER "+" (NUMBER "*" NUMBER) "+" NUMBER)
+
+Lexical grammar (used by the lexer to group characters into tokens):
+NUMBER      →  DIGIT+ ( "." DIGIT+ )?
+STRING      →  "\"" <any char except "\"">* "\""
+DIGIT       →  "0" ... "9"
