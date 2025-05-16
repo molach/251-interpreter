@@ -1,4 +1,4 @@
-package A_expressions;
+package lox;
 
 /**
  * @param type    The token's type, for example PLUS or NUMBER.

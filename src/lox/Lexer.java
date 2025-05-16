@@ -1,10 +1,10 @@
-package A_expressions;
+package lox;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static A_expressions.TokenType.*; // "static import"
+import static lox.TokenType.*; // "static import"
 
 // source code -> list of tokens
 class Lexer {
@@ -22,7 +22,9 @@ class Lexer {
             "false", FALSE,
             "nil",   NIL,
             "or",    OR,
-            "true",  TRUE
+            "true",  TRUE,
+            "print", PRINT,
+            "var",   VAR
     );
 
     Lexer(String source) {
@@ -50,6 +52,7 @@ class Lexer {
             case '-' -> addToken(MINUS);
             case '+' -> addToken(PLUS);
             case '*' -> addToken(STAR);
+            case ';' -> addToken(SEMICOLON);
 
             // token that has exactly two characters: ==
             case '=' -> {
@@ -86,7 +89,7 @@ class Lexer {
                 if (isDigit(ch)) { // start of a number
                     scanNumber();
                 } else if (isAlpha(ch)) { // start of keyword, like nil
-                    scanKeyword();
+                    scanKeywordOrIdentifier();
                 } else { // for example, @ ~ ^
                     Lox.error("Unexpected character.");
                 }
@@ -149,14 +152,14 @@ class Lexer {
         addToken(NUMBER, num);
     }
 
-    private void scanKeyword() {
-        // read until the end of the keyword
+    private void scanKeywordOrIdentifier() {
+        // read until the end of the keyword or identifier
         while (isAlphaNumeric(peek())) {
             advance();
         }
 
         String text = source.substring(start, current);
-        TokenType type = keywords.get(text);
+        TokenType type = keywords.getOrDefault(text, IDENTIFIER);
         // text: "and"
         // type: AND
         addToken(type);

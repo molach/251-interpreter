@@ -1,4 +1,4 @@
-package A_expressions;
+package lox;
 
 import java.util.List;
 import java.util.Scanner;
@@ -22,18 +22,29 @@ public class Lox {
         Lexer lexer = new Lexer(source);
         List<Token> tokens = lexer.scanTokens();
 
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+//        System.out.println("Here are the tokens: ");
+//        for (Token token : tokens) {
+//            System.out.println(token);
+//        }
 
-//        Parser parser = new Parser(tokens);
-//        Expr expr = parser.parseExpression();
-//        // expr is the root of the AST
-//
-//        interpreter.interpret(expr); // prints the result
+         Parser parser = new Parser(tokens);
+        // Expr expr = parser.parseExpression();
+        // expr is the root of the AST
+
+//        System.out.println("\nHere is the AST: ");
+//        System.out.println(expr);
+
+        // interpreter.interpret(expr); // prints the result
+
+        List<Stmt> stmts = parser.parse();
+
     }
 
     static void error(String message) {
         System.out.println(message);
+    }
+
+    static void runtimeError(RuntimeError error) {
+        System.out.println(error.getMessage());
     }
 }

@@ -15,3 +15,13 @@
            Literal:3  +  Literal:5
     - We have sealed interface Expr permits Logical, Binary, Unary, Literal, Grouping
 - We take the AST and pass it to the Interpreter, which evaluates the expression and prints the result: false
+
+
+print 7 + 1; // print statement, the "7 + 1" is an expression
+1 + 2; // expression statement (gets evaluated but not printed)
+var a = 1; // var statement
+var s1 = "hello";
+var s2 = s1 + " world";
+print s1; // print statement, "s1" is an expression
+
+s1 <----- a "variable expression", provides the value of s1

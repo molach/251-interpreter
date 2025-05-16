@@ -1,7 +1,7 @@
-package A_expressions;
+package lox;
 
 public sealed interface Expr
-        permits Binary, Grouping, Literal, Logical, Unary {}
+        permits Binary, Grouping, Literal, Logical, Unary, Variable {}
 
 /*
 -2 + 3
@@ -23,3 +23,5 @@ record Literal(Object value) implements Expr {}
 record Logical(Expr left, Token operator, Expr right) implements Expr {}
 
 record Unary(Token operator, Expr expr) implements Expr {}
+
+record Variable(Token name) implements Expr {}

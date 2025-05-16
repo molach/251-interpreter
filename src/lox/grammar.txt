@@ -23,6 +23,12 @@ Unary	        ! -	            Right-to-left
 10 - 4 - 2 = (10 - 4) - 2
 ---3       = -(-(-3))
 
+program        -> declaration*
+declaration    → varDecl | statement
+statement      → exprStmt | printStmt
+exprStmt       → expression ";"
+printStmt      → "print" expression ";"
+
 expression  →  logic_or
 logic_or    →  logic_and ( "or" logic_and )*
 logic_and   →  equality ( "and" equality )*
